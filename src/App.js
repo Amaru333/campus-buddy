@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import { Provider } from "react-redux";
+import authReducer from "./store/reducers/auth";
+import thunk from "redux-thunk";
+
+import StartingScreen from "./pages/StartingPage";
 
 function App() {
+  const rootReducer = combineReducers({
+    authReducer: authReducer,
+  });
+
+  const store = createStore(rootReducer, applyMiddleware(thunk));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <StartingScreen />
+    </Provider>
   );
 }
 
